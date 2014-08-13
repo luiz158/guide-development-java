@@ -113,17 +113,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-Para lidarmos com as transformações de exceções específicas de plataforma para as da hierarquia uniforme do
-Spring. A solução é bastante simples: basta anotarmos nosso DAO com @Repository ao invés de @Component 
-Esta é uma solução pode ser aplicada a qualquer DAO, inclusive JDBC. 
-Esta anotação é um estereótipo que permite ao container do Spring aplicar funcionalidades mais interessantes a DAOs. 
+Para lidarmos com as transformações de exceções específicas de plataforma para as da hierarquia 
+uniforme do Spring. A solução é bastante simples: basta anotarmos nosso DAO com @Repository ao 
+invés de @Component Esta é uma solução pode ser aplicada a qualquer DAO, inclusive JDBC. 
+Esta anotação é um estereótipo que permite ao container do Spring aplicar funcionalidades mais 
+interessantes a DAOs. 
 -----------------------
 Apenas a presença da anotação @Repositoty nas classes DAO não é suficiente, 
-faz-se necessário também incluir a definição de um novo bean do tipo PersistenceExceptionTranslationPostProcessor. 
-O que este bean faz é criar um aspecto do tipo after throw para todos os beans anotados com @Repository.
-A exceção será interceptada e automaticamente convertida para outra presente na hierarquia de exceções 
-uniformizada do Spring. 
-adicione o bean no arquivo: servlet-context.xml
+faz-se necessário também incluir a definição de um novo bean do tipo:
+PersistenceExceptionTranslationPostProcessor. 
+O que este bean faz é criar um aspecto do tipo after throw para todos os beans 
+anotados com @Repository.
+A exceção será interceptada e automaticamente convertida para outra presente na 
+hierarquia de exceções uniformizada do Spring. adicione o bean no arquivo: servlet-context.xml
 <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
 */
 @Repository
@@ -152,25 +154,44 @@ public class PersonDAOImpl extends GenericDAO<Person> {
 
 class HomeController
 ```java
-private PersonDAOImpl personDAOImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-@Autowired
-@Qualifier("personDAOImpl")
-public void setPersonDAOImpl(PersonDAOImpl personDAOImpl) {
-	this.personDAOImpl = personDAOImpl;
-}
+import com.eprogramar.springjpa.dao.PersonDAOImpl;
+import com.eprogramar.springjpa.model.Person;
 
-public PersonDAOImpl getPersonDAOImpl() {
-	return personDAOImpl;
-}
-
-@RequestMapping(value = "/", method = RequestMethod.GET)
-public ModelAndView home() {
-	logger.info("home()...");
-	ModelAndView mv = new ModelAndView("home");
+@Controller
+public class HomeController {
 	
-	getPersonDAOImpl().persist( new Person("Fabiano", "123") );
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	return mv;
+	private PersonDAOImpl personDAOImpl;
+
+	@Autowired
+	@Qualifier("personDAOImpl")
+	public void setPersonDAOImpl(PersonDAOImpl personDAOImpl) {
+		this.personDAOImpl = personDAOImpl;
+	}
+	
+	public PersonDAOImpl getPersonDAOImpl() {
+		return personDAOImpl;
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView home() {
+		logger.info("home()...");
+		ModelAndView mv = new ModelAndView("home");
+		
+		getPersonDAOImpl().persist( new Person("Fabiano", "123") );
+		
+		return mv;
+	}
+	
 }
 ```
