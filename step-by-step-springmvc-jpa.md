@@ -100,9 +100,21 @@ public class Person {
 	private String nome;
 	private String cpf;
 
-	getters and setters...
-}
-```
+	public Person() {
+	}
+
+	public Person(String nome, String cpf) {
+		this.nome = nome;
+		this.cpf = cpf;
+	}
+
+	// getters and setters...
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", nome=" + nome + ", cpf=" + cpf + "]";
+	}
+}```
 
 Create Generic class **PersonDAO**:  
 ```java
