@@ -1,5 +1,5 @@
-Maven Dependence for Projet Spring MVC with IoC
-===============================================
+Dependencies Projet Spring MVC
+==============================
 
 
 ```xml
