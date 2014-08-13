@@ -12,7 +12,7 @@ Step-by-Step - Spring MVC and JPA
 **Create Spring Project / Spring MVC Project**  
 **Project Name:** SpringJPA
 
-modify the property **java-version** at pom.xml file for **1.7**: 
+modify the property **java-version** at [pom.xml](pom.xml) file for **1.7**: 
 ```xml
 <properties>
 	<java-version>1.7</java-version>
@@ -23,7 +23,7 @@ modify the property **java-version** at pom.xml file for **1.7**:
 </properties>
 ```
 
-at pom.xml file modify **maven-compiler-plugin** and add property **java-version**:  
+at [pom.xml](pom.xml) file modify **maven-compiler-plugin** and add property **java-version**:  
 ```xml
 <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
@@ -41,7 +41,7 @@ at pom.xml file modify **maven-compiler-plugin** and add property **java-version
 
 right click at project and **Maven > Update Project...**  
 
-Dependencies JPA and Hibernate:  
+Dependencies JPA and Hibernate at [pom.xml](pom.xml) file:  
 ```xml
 <!-- Hibernate -->
 <dependency>
@@ -268,7 +268,7 @@ public class HomeController {
 }
 ```  
 
-Configuration **servlet-context.xml** file:  
+Configuration [servlet-context.xml](servlet-context.xml) file:  
 ```xml
 <!-- Scan packages -->
 <context:component-scan base-package="com.eprogramar.springjpa com.eprogramar.springjpa.dao" />
