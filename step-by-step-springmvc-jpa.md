@@ -85,7 +85,9 @@ Hibernate (3 and 4), iBatis, JDO and JPA
 </dependency>
 ```
  
-Create model class **Person** with JPA annottations:  
+--------------------------------------------------- 
+ 
+Create model class [Person](Person.java) with JPA annottations:  
 ```java
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -116,7 +118,9 @@ public class Person {
 	}
 }```
 
-Create Generic class **PersonDAO**:  
+-------------------------------------------------
+
+Create Generic class [PersonDAO](PersonDAO.java):  
 ```java
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -170,7 +174,9 @@ public class GenericDAO<T> {
 }
 ```
 
-Create class **PersonDAOImpl**:  
+-------------------------------------------------
+
+Create class [PersonDAOImpl](PersonDAOImpl.java):  
 ```java
 import org.springframework.stereotype.Repository;
 import com.eprogramar.springjpa.model.Person;
@@ -180,7 +186,9 @@ public class PersonDAOImpl extends GenericDAO<Person> {
 }
 ```
 
-Create class **PersonService**
+-------------------------------------------------
+
+Create class [PersonService](PersonService.java):
 ```java
 import java.util.List;
 import org.slf4j.Logger;
@@ -219,8 +227,9 @@ public class PersonService {
 
 ```
 
+---------------------------------------------------------------------
 
-class HomeController
+Create class [HomeController](HomeController.java)
 ```java
 import java.util.List;
 import org.slf4j.Logger;
@@ -267,6 +276,8 @@ public class HomeController {
 	}
 }
 ```  
+
+---------------------------------------------------------------
 
 Configuration [servlet-context.xml](servlet-context.xml) file:  
 ```xml
