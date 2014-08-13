@@ -3,6 +3,6 @@ Guide Development Java
 
 *Guide Step-by-Step for taks of Development Java*
 
-[Maven Dependence for Projet Spring MVC with IoC](MavenDependence-for-ProjetSpringMVCwithIoC.md)
+[Dependencies Project Spring MVC](Dependence-ProjectSpringMVC.md)
 
-[Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/Hibernate](MavenDependence-for-ProjetSpringMVCwithIoC.md)
+[Dependencies Project Spring MVC/Transaction/JPA/Hibernate](Dependencies-ProjetSpringMVC-Transaction-JPA-Hibernate.md)
