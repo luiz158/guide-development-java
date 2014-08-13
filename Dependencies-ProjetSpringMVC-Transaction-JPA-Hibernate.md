@@ -111,6 +111,16 @@ Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/H
 		<artifactId>hibernate-jpa-2.1-api</artifactId>
 		<version>1.0.0.Final</version>
 	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>3.1.1.RELEASE</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.2.2</version>
+	</dependency>
 
 	<!-- MySQL -->
 	<dependency>
