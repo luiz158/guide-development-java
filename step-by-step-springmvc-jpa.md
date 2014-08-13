@@ -37,7 +37,7 @@ at [pom.xml](pom.xml) file modify **maven-compiler-plugin** and add property **j
 	    <showDeprecation>true</showDeprecation>
 	</configuration>
 </plugin>
-```
+```  
 
 right click at project and **Maven > Update Project...**  
 
@@ -83,11 +83,11 @@ Hibernate (3 and 4), iBatis, JDO and JPA
 	<artifactId>mysql-connector-java</artifactId>
 	<version>5.1.31</version>
 </dependency>
-```
+```  
  
---------------------------------------------------- 
+---------------------------------------------------   
  
-Create model class [Person](Person.java) with JPA annottations:  
+Create model class [Person](Person.java) with JPA annottations:    
 ```java
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -116,11 +116,12 @@ public class Person {
 	public String toString() {
 		return "Person [id=" + id + ", nome=" + nome + ", cpf=" + cpf + "]";
 	}
-}```
+}
+```  
 
--------------------------------------------------
+-------------------------------------------------  
 
-Create Generic class [GenericDAO](GenericDAO.java):  
+Create Generic class [GenericDAO](GenericDAO.java):    
 ```java
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -178,9 +179,9 @@ public class GenericDAO<T> {
 }
 ```
 
--------------------------------------------------
+-------------------------------------------------  
 
-Create class [PersonDAOImpl](PersonDAOImpl.java):  
+Create class [PersonDAOImpl](PersonDAOImpl.java):    
 ```java
 import org.springframework.stereotype.Repository;
 import com.eprogramar.springjpa.model.Person;
@@ -190,9 +191,9 @@ public class PersonDAOImpl extends GenericDAO<Person> {
 }
 ```
 
--------------------------------------------------
+-------------------------------------------------  
 
-Create class [PersonService](PersonService.java):
+Create class [PersonService](PersonService.java):  
 ```java
 import java.util.List;
 import org.slf4j.Logger;
@@ -231,9 +232,9 @@ public class PersonService {
 
 ```
 
----------------------------------------------------------------------
+---------------------------------------------------------------------  
 
-Create class [HomeController](HomeController.java)
+Create class [HomeController](HomeController.java)  
 ```java
 import java.util.List;
 import org.slf4j.Logger;
@@ -281,9 +282,9 @@ public class HomeController {
 }
 ```  
 
----------------------------------------------------------------
+---------------------------------------------------------------  
 
-Configuration [servlet-context.xml](servlet-context.xml) file:  
+Configuration [servlet-context.xml](servlet-context.xml) file:    
 ```xml
 <!-- Scan packages -->
 <context:component-scan base-package="com.eprogramar.springjpa com.eprogramar.springjpa.dao" />
