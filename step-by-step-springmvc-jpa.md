@@ -118,38 +118,54 @@ public class Person {
 
 Create Generic class **PersonDAO**:  
 ```java
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-Para lidarmos com as transformações de exceções específicas de plataforma para as da hierarquia 
-uniforme do Spring. A solução é bastante simples: basta anotarmos nosso DAO com @Repository ao 
-invés de @Component Esta é uma solução pode ser aplicada a qualquer DAO, inclusive JDBC. 
-Esta anotação é um estereótipo que permite ao container do Spring aplicar funcionalidades mais 
-interessantes a DAOs. 
+Para lidarmos com as transformações de exceções específicas de plataforma para as da hierarquia uniforme do
+Spring. A solução é bastante simples: basta anotarmos nosso DAO com @Repository ao invés de @Component 
+Esta é uma solução pode ser aplicada a qualquer DAO, inclusive JDBC. 
+Esta anotação é um estereótipo que permite ao container do Spring aplicar funcionalidades mais interessantes a DAOs. 
 -----------------------
 Apenas a presença da anotação @Repositoty nas classes DAO não é suficiente, 
-faz-se necessário também incluir a definição de um novo bean do tipo:
-PersistenceExceptionTranslationPostProcessor. 
-O que este bean faz é criar um aspecto do tipo after throw para todos os beans 
-anotados com @Repository.
-A exceção será interceptada e automaticamente convertida para outra presente na 
-hierarquia de exceções uniformizada do Spring. adicione o bean no arquivo: servlet-context.xml
+faz-se necessário também incluir a definição de um novo bean do tipo PersistenceExceptionTranslationPostProcessor. 
+O que este bean faz é criar um aspecto do tipo after throw para todos os beans anotados com @Repository.
+A exceção será interceptada e automaticamente convertida para outra presente na hierarquia de exceções 
+uniformizada do Spring. 
+adicione o bean no arquivo: servlet-context.xml
 <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
 */
 @Repository
 public class GenericDAO<T> {
+	private static final Logger logger = LoggerFactory.getLogger(GenericDAO.class);
 	
 	@PersistenceContext
 	private EntityManager manager;
 
+	public EntityManager getManager(){
+		return this.manager;
+	}
+	
 	@Transactional
 	public void persist(T entity) {
-		System.out.println(entity.getClass().getName());
-		manager.persist(entity);
+		logger.info("persist("+entity+")");
+		this.getManager().persist(entity);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> getAll(Class<T> clazz){
+		logger.info("getAll("+clazz.getName()+")");
+		return this.getManager().createQuery("from "+clazz.getName()).getResultList();
+	}
+	
+	public T findById(Class<T> clazz, Long id){
+		logger.info("findById("+clazz.getName()+","+id+")");
+		return this.getManager().find(clazz, id);
 	}
 }
 ```
@@ -164,8 +180,49 @@ public class PersonDAOImpl extends GenericDAO<Person> {
 }
 ```
 
+Create class **PersonService**
+```java
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.eprogramar.springjpa.dao.PersonDAOImpl;
+import com.eprogramar.springjpa.model.Person;
+
+@Service("personService")
+public class PersonService {
+	private static final Logger logger = LoggerFactory.getLogger(PersonService.class);
+	
+	@Autowired
+	private PersonDAOImpl personDAOImpl;
+	
+	public void setPersonDAOImpl(PersonDAOImpl personDAOImpl){
+		this.personDAOImpl = personDAOImpl;
+	}
+	
+	public void persist(Person entity) {
+		logger.info("persist("+entity+")...");
+		this.personDAOImpl.persist(entity);
+	}
+	
+	public List<Person> getAll(){
+		logger.info("getAll()...");
+		return this.personDAOImpl.getAll(Person.class);
+	}
+	
+	public Person findById(Long id){
+		logger.info("findById("+id+")...");
+		return this.personDAOImpl.findById(Person.class, id);
+	}	
+}
+
+```
+
+
 class HomeController
 ```java
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,36 +231,74 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.eprogramar.springjpa.dao.PersonDAOImpl;
 import com.eprogramar.springjpa.model.Person;
+import com.eprogramar.springjpa.service.PersonService;
 
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	private PersonDAOImpl personDAOImpl;
+	private PersonService personService;
 
 	@Autowired
-	@Qualifier("personDAOImpl")
-	public void setPersonDAOImpl(PersonDAOImpl personDAOImpl) {
-		this.personDAOImpl = personDAOImpl;
+	@Qualifier("personService")
+	public void setPersonService(PersonService personService) {
+		this.personService = personService;
 	}
 	
-	public PersonDAOImpl getPersonDAOImpl() {
-		return personDAOImpl;
-	}
-
+	public PersonService getPersonDAOImpl() {
+		return this.personService;
+	}	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 		logger.info("home()...");
 		ModelAndView mv = new ModelAndView("home");
 		
-		getPersonDAOImpl().persist( new Person("Fabiano", "123") );
+		this.personService.persist( new Person("Fabiano", "123") );
+		
+		List<Person> listAll = this.personService.getAll();
+		for (Person person : listAll) {
+			System.out.println(person);
+		}
 		
 		return mv;
 	}
-	
 }
+```  
+
+Configuration **servlet-context.xml** file:  
+```xml
+<!-- Scan packages -->
+<context:component-scan base-package="com.eprogramar.springjpa com.eprogramar.springjpa.dao" />
+
+<!-- 
+Apenas a presença da anotação @Repositoty nas classes DAO não é suficiente, 
+faz-se necessário também incluir a definição de um novo bean do tipo PersistenceExceptionTranslationPostProcessor. 
+O que este bean faz é criar um aspecto do tipo after throw para todos os 
+beans anotados com @Repository. A exceção será interceptada e automaticamente 
+convertida para outra presente na hierarquia de exceções uniformizada do Spring. 
+-->
+<beans:bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"></beans:bean>
+
+<beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<beans:property name="dataSource" ref="dsSpringJPA" />
+	<beans:property name="jpaVendorAdapter">
+		<beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+	</beans:property>
+</beans:bean>
+
+<beans:bean id="dsSpringJPA" class="org.apache.commons.dbcp.BasicDataSource">
+	<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	<beans:property name="url" value="jdbc:mysql://192.9.200.20:3306/springjpa" />
+	<beans:property name="username" value="root" />
+	<beans:property name="password" value="root" />
+</beans:bean>
+
+  <tx:annotation-driven />
+
+<beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<beans:property name="entityManagerFactory" ref="entityManagerFactory" />
+</beans:bean>
 ```
