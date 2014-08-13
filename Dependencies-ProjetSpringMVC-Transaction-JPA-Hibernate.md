@@ -1,17 +1,7 @@
 Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/Hibernate
 ========================================================================================
 
-*this example is using MySQL Database*
-
-for use with HSQLDB use an depencence:
-```xml
-<dependency>
-	<groupId>hsqldb</groupId>
-	<artifactId>hsqldb</artifactId>
-	<version>1.8.0.10</version>
-</dependency>
-```
-
+**this example is using MySQL Database**
 
 ```xml
 <dependencies>
@@ -138,4 +128,14 @@ for use with HSQLDB use an depencence:
 	</dependency>
 </dependencies>
 
+```
+
+*for use with HSQLDB use an depencence:*
+
+```xml
+<dependency>
+	<groupId>hsqldb</groupId>
+	<artifactId>hsqldb</artifactId>
+	<version>1.8.0.10</version>
+</dependency>
 ```
