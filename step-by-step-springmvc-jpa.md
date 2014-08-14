@@ -43,7 +43,9 @@ at [pom.xml](pom.xml) file modify **maven-compiler-plugin** and add property **j
 
 + Input dependencies JPA and Hibernate at [pom.xml](pom.xml) file:  
 
-+ Configuration [servlet-context.xml](servlet-context.xml) file:    
++ Configuration [servlet-context.xml](servlet-context.xml) file:  
+
++ Configuration [persistence.xml](persistence.xml) file:
 
 + Create model class [Person](Person.java) with JPA annottations:    
 
