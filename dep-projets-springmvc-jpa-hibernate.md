@@ -4,6 +4,14 @@ Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/H
 **this example is using MySQL Database**
 
 ```xml
+<properties>
+	<java-version>1.7</java-version>
+	<org.springframework-version>3.1.2.RELEASE</org.springframework-version>
+	<org.aspectj-version>1.6.10</org.aspectj-version>
+	<org.slf4j-version>1.6.6</org.slf4j-version>
+	<org.hibernate-version>4.3.6.Final</org.hibernate-version>
+</properties>
+
 <dependencies>
 	<!-- Spring -->
 	<dependency>
@@ -22,6 +30,46 @@ Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/H
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-webmvc</artifactId>
 		<version>${org.springframework-version}</version>
+	</dependency>
+
+	<!-- Strong ORM Para ativar o suporte ao Hibernate precisamos adicionar 
+		a dependência spring-orm que nos fornecerá suporte aos principais ORMs do 
+		mercado suportados pelo Spring: Hibernate (3, e 4), iBatis, JDO e JPA. -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>1.2.2</version>
+	</dependency>
+	
+	<!-- AOP dependency -->
+	<dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>2.2</version>
+	</dependency>
+	
+	<!-- JPA / Hibernate -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${org.hibernate-version}</version>
+	</dependency>
+
+	<!-- MySQL -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.31</version>
 	</dependency>
 
 	<!-- AspectJ -->
@@ -100,35 +148,6 @@ Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/H
 		<version>1.2</version>
 	</dependency>
 
-	<!-- JPA / Hibernate -->
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-entitymanager</artifactId>
-		<version>${org.hibernate-version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.hibernate.javax.persistence</groupId>
-		<artifactId>hibernate-jpa-2.1-api</artifactId>
-		<version>1.0.0.Final</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-orm</artifactId>
-		<version>3.1.1.RELEASE</version>
-	</dependency>
-	<dependency>
-		<groupId>commons-dbcp</groupId>
-		<artifactId>commons-dbcp</artifactId>
-		<version>1.2.2</version>
-	</dependency>
-
-	<!-- MySQL -->
-	<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.31</version>
-	</dependency>
-
 	<!-- Test -->
 	<dependency>
 		<groupId>junit</groupId>
@@ -137,7 +156,6 @@ Maven Dependence for Project Spring MVC with Spring IoC/Spring Transaction/JPA/H
 		<scope>test</scope>
 	</dependency>
 </dependencies>
-
 ```
 
 *for use with HSQLDB use an depencence:*
