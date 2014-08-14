@@ -1,4 +1,4 @@
-import java.util.List;
+package com.eprogramar.springjpa.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +13,9 @@ import com.eprogramar.springjpa.model.Person;
 import com.eprogramar.springjpa.service.PersonService;
 
 @Controller
-public class HomeController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+public class PersonController {
+
+private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 	
 	private PersonService personService;
 
@@ -29,18 +29,19 @@ public class HomeController {
 		return this.personService;
 	}	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home() {
-		logger.info("home()...");
-		ModelAndView mv = new ModelAndView("home");
-		
-		this.personService.persist( new Person("Fabiano", "123") );
-		
-		List<Person> listAll = this.personService.getAll();
-		for (Person person : listAll) {
-			System.out.println(person);
-		}
-		
+	@RequestMapping(value = "/persistPerson", method = RequestMethod.GET)
+	public ModelAndView persistPerson(Person person){
+		logger.info("persistPerson("+person+")");
+		this.personService.persist(person);		
+		return viewPerson();
+	}
+	
+	@RequestMapping(value = "/viewPerson", method = RequestMethod.GET)
+	public ModelAndView viewPerson(){
+		logger.info("viewPerson()...");
+		ModelAndView mv = new ModelAndView("person");
+		mv.addObject("list", this.personService.getAll());
 		return mv;
 	}
+	
 }
