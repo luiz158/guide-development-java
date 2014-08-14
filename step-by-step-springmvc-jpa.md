@@ -43,6 +43,8 @@ at [pom.xml](pom.xml) file modify **maven-compiler-plugin** and add property **j
 
 + Input dependencies JPA and Hibernate at [pom.xml](pom.xml) file:  
 
++ Configuration [servlet-context.xml](servlet-context.xml) file:    
+
 + Create model class [Person](Person.java) with JPA annottations:    
 
 + Create Generic class [GenericDAO](GenericDAO.java):    
@@ -53,4 +55,3 @@ at [pom.xml](pom.xml) file modify **maven-compiler-plugin** and add property **j
 
 + Create class [HomeController](HomeController.java):  
 
-+ Configuration [servlet-context.xml](servlet-context.xml) file:    
