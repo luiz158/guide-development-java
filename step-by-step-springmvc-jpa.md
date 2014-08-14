@@ -28,5 +28,7 @@ Step-by-Step - Spring MVC and JPA
 
 10. Create class [PersonService](PersonService.java):  
 
-11. Create class [HomeController](HomeController.java):  
+11. Create class [PersonController](PersonController.java):  
+
+12. Create View [person.jsp](person.jsp):  
 
