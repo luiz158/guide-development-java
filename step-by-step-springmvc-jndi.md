@@ -80,6 +80,7 @@ public class ExemploDAO {
 ```
 
 - Example of the use:  
+
 **class DAO:** ExemploDAO.java 
 ```java
 package com.eprogramar.springjndi.dao;
@@ -122,7 +123,7 @@ public class ExemploDAO {
 }
 ```
 
-- **class Service:** ExemploService.Java  
+**class Service:** ExemploService.Java  
 ```java
 package com.eprogramar.springjndi.service;
 
