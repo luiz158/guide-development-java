@@ -3,10 +3,10 @@ Step-by-Step - SpringMVC and JNDI
 
 Step-by-Step for create and configuration a project Spring MVC with JNDI Pool Connection
 
-1. Create Spring Project / Spring MVC Project, Name: **SpringJNDI**
-2. Modify the property **java-version** at pom.xml file for **1.7** and use the property in build block:
-3. Right click at project and Maven > **Update Project...**
-4. Create file [context.xml](context.xml) at directory **webapp/META-INF/**
+- Create Spring Project / Spring MVC Project, Name: **SpringJNDI**
+- Modify the property **java-version** at pom.xml file for **1.7** and use the property in build block:
+- Right click at project and Maven > **Update Project...**
+ Create file [context.xml](context.xml) at directory **webapp/META-INF/**
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/MonitorSosFirst" docBase="MonitorSosFirst">
@@ -26,8 +26,9 @@ Step-by-Step for create and configuration a project Spring MVC with JNDI Pool Co
                   maxWait="10000"/>
                   
 </Context>
-```  
-5. Modify **web.xml** file and add code:
+```
+
+-- Modify **web.xml** file and add code:
  ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/MonitorSosFirst" docBase="MonitorSosFirst">
@@ -48,6 +49,5 @@ Step-by-Step for create and configuration a project Spring MVC with JNDI Pool Co
                   
 </Context>
  ```  
- 
  
 6. At Class DAO Inject DataSource: 
