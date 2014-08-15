@@ -29,11 +29,11 @@ Step-by-Step for create and configuration a project Spring MVC with JNDI Pool Co
 
 - Modify **web.xml** file and add code:
 ```xml
-	<resource-ref>
-	    <res-ref-name>jdbc/SpringJNDI_Pool</res-ref-name>
-	    <res-type>javax.sql.DataSource</res-type>
-	    <res-auth>Container</res-auth>
-	</resource-ref> 
+<resource-ref>
+    <res-ref-name>jdbc/SpringJNDI_Pool</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+</resource-ref> 
 ```  
 
 - Add bean DataSource at file **servlet-context.xml**  
